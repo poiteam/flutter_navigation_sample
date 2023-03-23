@@ -25,8 +25,20 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
+def getAppId() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('./local.properties').newDataInputStream())
+    return properties.getProperty("APPID")
+}
+
+def getAppSecret() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('./local.properties').newDataInputStream())
+    return properties.getProperty("SECRET")
+}
+
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -44,10 +56,12 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.poilabs.flutter_navigation_sample"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        buildConfigField "String", "APPID", "\""+getAppId()+"\""
+        buildConfigField "String", "APPSECRET", "\""+getAppSecret()+"\""
     }
 
     buildTypes {
@@ -65,4 +79,8 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'com.github.poiteam:Android-Navigation-SDK:v3.0.35'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+
 }
