@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -59,6 +60,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+    return UiKitView(
+          viewType: "PoilabsMapView",
+          creationParams: null,
+          creationParamsCodec: const StandardMessageCodec());
+    } else if (defaultTargetPlatform == TargetPlatform.android) {
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -71,6 +79,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.map),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+    } else {
+return Text("Not supported");
+    }
+
   }
 
   Future<void> _startNavigation() async {
