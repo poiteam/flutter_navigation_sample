@@ -1,10 +1,176 @@
-# flutter_navigation_sample
+# PoilabsNavigation Flutter Integration
 
 Flutter sample for navigation SDK
 
 ## Getting Started
 
 This project is just a sample to implement poiLabs Navigation SDK in a flutter project.
+
+## iOS SIDE
+
+[![Version](https://img.shields.io/cocoapods/v/PoilabsNavigation.svg?style=flat)](https://cocoapods.org/pods/PoilabsNavigation)
+[![Platform](https://img.shields.io/cocoapods/p/PoilabsNavigation.svg?style=flat)](https://cocoapods.org/pods/PoilabsNavigation)
+
+PoilabsNavigation provides a native iOS UIView. You can add this view to your Flutter app with Platform Views. For general information about hosting native iOS views in your Flutter app with Platform Views, see the official Flutter docs with link below.
+
+[Hosting native iOS views in your Flutter app with Platform Views](https://docs.flutter.dev/development/platform-integration/ios/platform-views)
+
+### Installation
+
+To integrate PoilabsNavigation into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+```ruby
+pod 'PoilabsNavigation'
+```
+
+Tip: CocoaPods provides a pod init command to create a Podfile with smart defaults. You should use it.
+
+Now you can install the dependencies in your project:
+
+```ruby
+$ pod install
+```
+
+Make sure to always open the Xcode workspace instead of the project file when building your project:
+
+```ruby
+$ open App.xcworkspace
+```
+
+### Pre-Requirements
+
+To Integrate this framework you should add some features to your project info.plist file.
+
++MGLMapboxMetricsEnabledSettingShownInApp : YES
+
++Privacy - Location When In Use Usage Description
+
+### PoilabsMapView File
+
+Create a swift file called PoilabsMapView.swift
+
+```swift
+import UIKit
+import PoilabsNavigation
+
+class PoilabsMapView: UIView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        PLNNavigationSettings.sharedInstance().applicationId = "application_id"
+        PLNNavigationSettings.sharedInstance().applicationSecret = "application_secret_key"
+        PLNNavigationSettings.sharedInstance().applicationLanguage = "tr"
+
+        PLNavigationManager.sharedInstance()?.getReadyForStoreMap(completionHandler: { (error) in
+            if error == nil {
+                let carrierView = PLNNavigationMapView(frame: self.frame)
+                carrierView.awakeFromNib()
+                self.addSubview(carrierView)
+            } else {
+                //show error
+            }
+        })
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+```
+
+### FLNativeViewFactory File
+
+Create a swift file called FLNativeViewFactory.swift 
+
+Implement the factory and the platform view. The FLNativeViewFactory creates the platform view, and the platform view provides a reference to the PoilabsMapView.
+
+```swift
+import Flutter
+import UIKit
+
+class FLNativeViewFactory: NSObject, FlutterPlatformViewFactory {
+    private var messenger: FlutterBinaryMessenger
+
+    init(messenger: FlutterBinaryMessenger) {
+        self.messenger = messenger
+        super.init()
+    }
+
+    func create(
+        withFrame frame: CGRect,
+        viewIdentifier viewId: Int64,
+        arguments args: Any?
+    ) -> FlutterPlatformView {
+        return FLNativeView(
+            frame: frame,
+            viewIdentifier: viewId,
+            arguments: args,
+            binaryMessenger: messenger)
+    }
+}
+
+class FLNativeView: NSObject, FlutterPlatformView {
+    private var _view: UIView
+
+    init(
+        frame: CGRect,
+        viewIdentifier viewId: Int64,
+        arguments args: Any?,
+        binaryMessenger messenger: FlutterBinaryMessenger?
+    ) {
+        _view = PoilabsMapView(frame: frame)
+        super.init()
+    }
+
+    func view() -> UIView {
+        return _view
+    }
+}
+```
+
+### FLPlugin File
+
+Create a file called FLPlugin.swift
+
+```swift
+import Flutter
+import UIKit
+
+class FLPlugin: NSObject, FlutterPlugin {
+    public static func register(with registrar: FlutterPluginRegistrar) {
+        let factory = FLNativeViewFactory(messenger: registrar.messenger())
+        registrar.register(factory, withId: "PoilabsMapView")
+    }
+}
+```
+
+### AppDelegate.swift File
+
+Finally, register the platform view. This can be done in an app or a plugin.
+
+For app registration, modify the App’s AppDelegate.swift:
+
+```swift
+import Flutter
+import UIKit
+
+@UIApplicationMain
+@objc class AppDelegate: FlutterAppDelegate {
+    override func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?
+    ) -> Bool {
+        GeneratedPluginRegistrant.register(with: self)
+
+        weak var registrar = self.registrar(forPlugin: "plugin-name")
+
+        let factory = FLNativeViewFactory(messenger: registrar!.messenger())
+        self.registrar(forPlugin: "PoilabsMapViewPlugin")!.register(
+            factory,
+            withId: "PoilabsMapView")
+        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+}
+```
 
 ## Android SIDE
 For starters you should add dependencies to android project level build.gradle.
@@ -139,18 +305,27 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _startNavigation,
-        tooltip: 'Start Navigation',
-        child: const Icon(Icons.map),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+        return UiKitView(
+            viewType: "PoilabsMapView",
+            creationParams: null,
+            creationParamsCodec: const StandardMessageCodec());
+    } else if (defaultTargetPlatform == TargetPlatform.android) {
+        return Scaffold(
+            appBar: AppBar(
+                // Here we take the value from the MyHomePage object that was created by
+                // the App.build method, and use it to set our appbar title.
+                title: Text(widget.title),
+            ),
+            floatingActionButton: FloatingActionButton(
+                onPressed: _startNavigation,
+                tooltip: 'Start Navigation',
+                child: const Icon(Icons.map),
+            ), // This trailing comma makes auto-formatting nicer for build methods.
+        );
+    } else {
+        return Text("Not supported");
+    }
   }
 
   Future<void> _startNavigation() async {
