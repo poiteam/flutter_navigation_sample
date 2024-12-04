@@ -80,7 +80,7 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'com.github.poiteam:Android-Navigation-SDK:v3.0.35'
+    implementation 'com.github.poiteam:Android-Navigation-SDK:4.2.2'
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
 }
