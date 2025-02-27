@@ -207,7 +207,7 @@ allprojects {
 and then add navigation sdk implementation in app level build.gradle
 
 ```groovy
-    implementation 'com.github.poiteam:Android-Navigation-SDK:4.3.1'
+    implementation 'com.github.poiteam:Android-Navigation-SDK:4.4.0'
 ```
 
 then you should register a channel in Main activity 
