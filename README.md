@@ -8,8 +8,8 @@ This project is just a sample to implement poiLabs Navigation SDK in a flutter p
 
 ## iOS SIDE
 
-[![Version](https://img.shields.io/cocoapods/v/PoilabsNavigation.svg?style=flat)](https://cocoapods.org/pods/PoilabsNavigation)
-[![Platform](https://img.shields.io/cocoapods/p/PoilabsNavigation.svg?style=flat)](https://cocoapods.org/pods/PoilabsNavigation)
+[![Version](assets/badges/cocoapods-version.svg)](https://cocoapods.org/pods/PoilabsNavigation)
+[![Platform](assets/badges/cocoapods-platform.svg)](https://cocoapods.org/pods/PoilabsNavigation)
 
 PoilabsNavigation provides a native iOS UIView. You can add this view to your Flutter app with Platform Views. For general information about hosting native iOS views in your Flutter app with Platform Views, see the official Flutter docs with link below.
 
