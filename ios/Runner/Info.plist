@@ -3,9 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Lokasyon izni</string>
-	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
-	<true/>
+	<string>Your location is used for indoor navigation.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Your location is used for indoor navigation.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Bluetooth is used to find your indoor location.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Bluetooth is used to find your indoor location.</string>
+	<key>PoilabsApplicationId</key>
+	<string>$(POILABS_APPLICATION_ID)</string>
+	<key>PoilabsApplicationSecret</key>
+	<string>$(POILABS_APPLICATION_SECRET)</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>CFBundleDevelopmentRegion</key>

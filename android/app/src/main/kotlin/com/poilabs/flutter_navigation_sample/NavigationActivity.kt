@@ -35,22 +35,21 @@ class NavigationActivity : AppCompatActivity() {
             localeLanguage,
             poiSdkConfig
         ).bind(object : PoiNavigation.OnNavigationReady {
-            override fun onReady(p0: MapFragment?) {
-                p0?.let {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_act_layout, it)
-                        .commit()
-                }
+            override fun onReady(mapFragment: MapFragment) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_act_layout, mapFragment)
+                    .commit()
             }
 
             override fun onStoresReady() {
 
             }
 
-            override fun onError(p0: Throwable?) {
+            override fun onError(exception: Throwable?) {
 
             }
 
-            override fun onStatusChanged(p0: PLPStatus?) {
+            override fun onStatusChanged(plpStatus: PLPStatus) {
 
             }
 

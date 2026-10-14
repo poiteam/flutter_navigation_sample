@@ -1,14 +1,7 @@
-buildscript {
-    ext.kotlin_version = '1.7.0'
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "com.android.tools.build:gradle:7.0.1"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10"
-    }
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader("UTF-8") { localProperties.load(it) }
 }
 
 allprojects {
@@ -16,33 +9,31 @@ allprojects {
         google()
         mavenCentral()
         maven {
-            url "https://jitpack.io"
-            Properties properties = new Properties()
-            properties.load(project.rootProject.file('local.properties').newDataInputStream())
-            credentials { username =properties.getProperty('jitpackToken') }
-        }
-        maven {
-            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            url "https://api.mapbox.com/downloads/v2/releases/maven"
             authentication {
                 basic(BasicAuthentication)
             }
-            Properties properties = new Properties()
-            properties.load(project.rootProject.file('local.properties').newDataInputStream())
             credentials {
-                username = 'mapbox'
-                password = properties.getProperty('MAP_BOX_TOKEN')
+                username = "mapbox"
+                password = localProperties.getProperty("MAPBOX_TOKEN", "")
             }
         }
-        maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+        maven {
+            url "https://jitpack.io"
+            credentials { username = localProperties.getProperty("JITPACK_TOKEN", "") }
+        }
     }
 }
 
-rootProject.buildDir = '../build'
+rootProject.layout.buildDirectory.value(rootProject.layout.buildDirectory.dir("../../build").get())
+
 subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
-    project.evaluationDependsOn(':app')
+    project.layout.buildDirectory.value(rootProject.layout.buildDirectory.dir(project.name).get())
+}
+subprojects {
+    project.evaluationDependsOn(":app")
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks.register("clean", Delete) {
+    delete rootProject.layout.buildDirectory
 }

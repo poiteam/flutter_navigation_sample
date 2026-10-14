@@ -1,10 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.poilabs.flutter_navigation_sample">
+   >
    <application
         android:label="flutter_navigation_sample"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
@@ -32,7 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-       <activity android:name=".NavigationActivity" android:screenOrientation="portrait" android:theme="@style/NavigationTheme"/>
+       <activity android:name=".NavigationActivity" android:exported="false" android:screenOrientation="portrait" android:theme="@style/NavigationTheme"/>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

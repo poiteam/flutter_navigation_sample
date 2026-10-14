@@ -11,24 +11,25 @@ import PoilabsNavigation
 class PoilabsMapView: UIView, PLNNavigationMapViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        PLNNavigationSettings.sharedInstance().applicationId = "application_id"
-        PLNNavigationSettings.sharedInstance().applicationSecret = "application_secret_key"
-        PLNNavigationSettings.sharedInstance().applicationLanguage = "tr"
+        let settings = PLNNavigationSettings.sharedInstance()
+        settings?.applicationId = Bundle.main.object(forInfoDictionaryKey: "PoilabsApplicationId") as? String ?? ""
+        settings?.applicationSecret = Bundle.main.object(forInfoDictionaryKey: "PoilabsApplicationSecret") as? String ?? ""
+        settings?.navigationUniqueIdentifier = "YOUR_USER_UNIQUE_ID"
+        settings?.applicationLanguage = "tr"
 
         PLNavigationManager.sharedInstance()?.getReadyForStoreMap(completionHandler: { (error) in
             if error == nil {
-                let carrierView = PLNNavigationMapView(frame: self.frame)
+                let carrierView = PLNNavigationMapView(frame: self.bounds)
+                carrierView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
                 carrierView.awakeFromNib()
                 carrierView.delegate = self
-                carrierView.searchBarBaseView.backgroundColor = UIColor.black
-                carrierView.searchCancelButton.setTitleColor(.white, for: .normal)
                 self.addSubview(carrierView)
             } else {
-                //show error
+                print("PoiLabs SDK init failed: \(String(describing: error))")
             }
         })
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
