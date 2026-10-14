@@ -18,11 +18,13 @@ PoilabsNavigation provides a native iOS UIView. You can add this view to your Fl
 |---|---|
 | PoilabsNavigation | 7.3.1 |
 | Minimum iOS | 14.0 |
-| Installation | Swift Package Manager (recommended) or CocoaPods (git tag) |
+| Installation | Swift Package Manager |
 
 ### Installation
 
-Starting with 7.3.1, PoilabsNavigation is distributed with **Swift Package Manager (SPM)**. A Flutter app is a normal Xcode project on the iOS side, so you add the package to the **Runner** target:
+PoilabsNavigation is distributed with **Swift Package Manager (SPM)**. CocoaPods is no longer supported; new versions are not published there.
+
+A Flutter app is a normal Xcode project on the iOS side, so you add the package to the **Runner** target:
 
 1. Open `ios/Runner.xcworkspace` in Xcode.
 2. Select **File > Add Package Dependencies...**
@@ -30,13 +32,12 @@ Starting with 7.3.1, PoilabsNavigation is distributed with **Swift Package Manag
 4. Choose **Exact Version** `7.3.1` and add the **PoilabsNavigation** product to the **Runner** target.
 5. Set the iOS deployment target of the Runner target (and `platform :ios` in your `Podfile`, if you have one) to **14.0** or higher.
 
-The package contains everything the SDK needs: PoilabsNavigation, PoilabsMapView, PoilabsCommon and Mapbox Maps 11.18.0. PoilabsPositioning, PoilabsSdkAnalytics and PoilabsCore are resolved automatically. You do not need to add Mapbox separately.
+The package contains everything the SDK needs: PoilabsNavigation, PoilabsMapView, PoilabsCommon and Mapbox Maps 11.18.0. PoilabsPositioning, PoilabsSdkAnalytics and PoilabsCore are resolved automatically. You do not need to add Mapbox or any other dependency yourself.
 
 > The first package resolution can take a few minutes because the package contains the Mapbox frameworks.
 
 **Notes**
 
-- Use either SPM or CocoaPods for Poilabs SDKs, not both in the same app.
 - The SDK ships its own Mapbox Maps 11.18.0. If your app (or another Flutter plugin) also adds Mapbox Maps, the two copies conflict.
 - Flutter's own `Podfile` stays as it is; Flutter still uses it for your other plugins. You only remove the Poilabs lines from it.
 
@@ -49,20 +50,6 @@ If you integrated an older version with `pod 'PoilabsNavigation'`:
 3. Add the package with Swift Package Manager as described above.
 
 Do not keep the SDK in your Podfile while it is added with SPM; the same frameworks would be embedded twice.
-
-### CocoaPods (alternative)
-
-If you must stay on CocoaPods, add the SDK to `ios/Podfile` from its git tag:
-
-```ruby
-pod 'PoilabsNavigation', :git => 'https://github.com/poiteam/ios-navigation-pod.git', :tag => '7.3.1'
-```
-
-Then run:
-
-```bash
-$ cd ios && pod install
-```
 
 ### Pre-Requirements
 
