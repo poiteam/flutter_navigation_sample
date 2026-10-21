@@ -210,7 +210,7 @@ import UIKit
 
 | | |
 |---|---|
-| PoilabsNavigation | 8.1.0 |
+| PoilabsNavigation | 8.1.1 |
 | Minimum Android | API 24 (Android 7.0) |
 | Compile SDK | 35 or higher |
 | JDK (local / CI) | 17 |
@@ -260,7 +260,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.poiteam:Android-Navigation-SDK:8.1.0'
+    implementation 'com.github.poiteam:Android-Navigation-SDK:8.1.1'
     implementation 'androidx.appcompat:appcompat:1.7.0'
 }
 ```
