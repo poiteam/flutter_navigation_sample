@@ -508,7 +508,7 @@
 			repositoryURL = "https://github.com/poiteam/ios-navigation-pod.git";
 			requirement = {
 				kind = exactVersion;
-				version = 7.3.1;
+				version = 7.3.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
