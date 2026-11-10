@@ -16,7 +16,7 @@ PoilabsNavigation provides a native iOS UIView. You can add this view to your Fl
 
 | | |
 |---|---|
-| PoilabsNavigation | 7.3.2 |
+| PoilabsNavigation | 7.3.3 |
 | Minimum iOS | 14.0 |
 | Installation | Swift Package Manager |
 
@@ -29,7 +29,7 @@ A Flutter app is a normal Xcode project on the iOS side, so you add the package 
 1. Open `ios/Runner.xcworkspace` in Xcode.
 2. Select **File > Add Package Dependencies...**
 3. Enter the repository URL: `https://github.com/poiteam/ios-navigation-pod.git`
-4. Choose **Exact Version** `7.3.2` and add the **PoilabsNavigation** product to the **Runner** target.
+4. Choose **Exact Version** `7.3.3` and add the **PoilabsNavigation** product to the **Runner** target.
 5. Set the iOS deployment target of the Runner target (and `platform :ios` in your `Podfile`, if you have one) to **14.0** or higher.
 
 The package contains everything the SDK needs: PoilabsNavigation, PoilabsMapView, PoilabsCommon and Mapbox Maps 11.18.0. PoilabsPositioning, PoilabsSdkAnalytics and PoilabsCore are resolved automatically. You do not need to add Mapbox or any other dependency yourself.
@@ -210,7 +210,7 @@ import UIKit
 
 | | |
 |---|---|
-| PoilabsNavigation | 8.1.2 |
+| PoilabsNavigation | 8.1.4 |
 | Minimum Android | API 24 (Android 7.0) |
 | Compile SDK | 35 or higher |
 | JDK (local / CI) | 17 |
@@ -260,7 +260,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.poiteam:Android-Navigation-SDK:8.1.2'
+    implementation 'com.github.poiteam:Android-Navigation-SDK:8.1.4'
     implementation 'androidx.appcompat:appcompat:1.7.0'
 }
 ```
