@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/poiteam/ios-navigation-pod.git",
       "state" : {
-        "revision" : "4b75ca55fa9843c19356fa4dcbb85627898fb5d6",
-        "version" : "7.3.3"
+        "revision" : "4c176a8825fa61cb294b3499bac8f27362e22e62",
+        "version" : "7.3.4"
       }
     },
     {
